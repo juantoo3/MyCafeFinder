@@ -1,1 +1,132 @@
---For CSS
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Poppins,sans-serif;
+}
+
+body{
+    background:#f5f5f5;
+}
+
+header{
+
+    height:70px;
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    padding:0 30px;
+
+    background:#5D4037;
+    color:white;
+
+    box-shadow:0 2px 8px rgba(0,0,0,.15);
+}
+
+header input{
+
+    width:300px;
+
+    padding:10px 15px;
+
+    border:none;
+    border-radius:10px;
+}
+
+main{
+
+    display:flex;
+
+    height:calc(100vh - 70px);
+
+}
+
+#sidebar{
+
+    width:350px;
+
+    background:white;
+
+    overflow-y:auto;
+
+    border-right:1px solid #ddd;
+
+    padding:20px;
+
+}
+
+#sidebar h3{
+
+    margin-bottom:20px;
+
+}
+
+#cafeList{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:15px;
+
+}
+
+.cafe-card{
+
+    background:white;
+
+    border-radius:12px;
+
+    padding:15px;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+    box-shadow:0 2px 8px rgba(0,0,0,.08);
+
+}
+
+.cafe-card:hover{
+
+    transform:translateY(-3px);
+
+}
+
+#map{
+
+    flex:1;
+
+}
+
+#myLocationBtn{
+
+    position:absolute;
+
+    bottom:25px;
+
+    right:25px;
+
+    border:none;
+
+    padding:14px 18px;
+
+    background:#5D4037;
+
+    color:white;
+
+    border-radius:50px;
+
+    cursor:pointer;
+
+    box-shadow:0 4px 12px rgba(0,0,0,.25);
+
+}
+
+#myLocationBtn:hover{
+
+    background:#795548;
+
+}
