@@ -130,3 +130,76 @@ main{
     background:#795548;
 
 }
+
+#detailsPanel{
+
+    position:absolute;
+
+    top:80px;
+
+    right:-420px;
+
+    width:380px;
+
+    height:calc(100vh - 100px);
+
+    background:white;
+
+    transition:.35s;
+
+    box-shadow:-3px 0 10px rgba(0,0,0,.2);
+
+    padding:20px;
+
+    overflow:auto;
+
+    z-index:999;
+}
+
+#detailsPanel.show{
+
+    right:20px;
+
+}
+
+#closePanel{
+
+    float:right;
+
+    border:none;
+
+    background:none;
+
+    font-size:22px;
+
+    cursor:pointer;
+
+}
+
+.loading{
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    height:120px;
+
+    font-size:18px;
+
+}
+
+.distance{
+
+    color:#5D4037;
+
+    font-weight:600;
+
+}
+
+.cafe-card.active{
+
+    border:2px solid #5D4037;
+
+}
