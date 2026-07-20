@@ -66,3 +66,15 @@ function addCafeMarkers(cafes) {
     });
 
 }
+
+function focusCafe(index){
+
+    const marker=cafeMarkers[index];
+
+    map.flyTo(marker.getLatLng(),17);
+
+    marker.openPopup();
+
+    showDetails(marker.cafe);
+
+}
