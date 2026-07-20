@@ -49,6 +49,8 @@ function setupLocationButton(location) {
                 16
             );
 
+            userMarker.openPopup();
+
         };
 
 }
