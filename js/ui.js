@@ -105,17 +105,23 @@ function formatDistance(distance) {
 
 function getAddress(cafe) {
 
-    if (cafe.tags?.["addr:full"])
-        return cafe.tags["addr:full"];
+    const parts = [
 
-    if (cafe.tags?.["addr:street"])
-        return cafe.tags["addr:street"];
+        cafe.tags?.["addr:housenumber"],
 
-    if (cafe.tags?.["addr:housenumber"])
-        return cafe.tags["addr:housenumber"];
+        cafe.tags?.["addr:street"],
 
-    if (cafe.tags?.["addr:city"])
-        return cafe.tags["addr:city"];
+        cafe.tags?.["addr:suburb"],
+
+        cafe.tags?.["addr:city"],
+
+        cafe.tags?.["addr:postcode"]
+
+    ].filter(Boolean);
+
+    if (parts.length > 0) {
+        return parts.join(", ");
+    }
 
     return "Address unavailable";
 
