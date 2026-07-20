@@ -1,36 +1,25 @@
-function initializeApp(){
-
-    if(!navigator.geolocation){
-
-        alert("Geolocation not supported.");
-
-        return;
-
-    }
+function initializeApp() {
 
     navigator.geolocation.getCurrentPosition(
 
-        position=>{
+        position => {
 
-            const location={
+            const location = {
 
-                lat:position.coords.latitude,
-
-                lng:position.coords.longitude
+                lat: position.coords.latitude,
+                lng: position.coords.longitude
 
             };
 
             createMap(location);
 
-            initializePlaces();
-
             searchNearbyCafes(location);
 
-            setupMyLocationButton(location);
+            setupLocationButton(location);
 
         },
 
-        ()=>{
+        () => {
 
             alert("Unable to retrieve location.");
 
@@ -40,18 +29,19 @@ function initializeApp(){
 
 }
 
-function setupMyLocationButton(location){
+function setupLocationButton(location) {
 
     document
-
         .getElementById("myLocationBtn")
+        .onclick = () => {
 
-        .addEventListener("click",()=>{
+            map.setView(
+                [location.lat, location.lng],
+                16
+            );
 
-            map.panTo(location);
-
-            map.setZoom(15);
-
-        });
+        };
 
 }
+
+window.onload = initializeApp;
