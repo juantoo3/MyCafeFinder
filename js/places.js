@@ -51,7 +51,7 @@ out center;
         // Sort by nearest
         cafes.sort((a, b) => a.distance - b.distance);
 
-        console.log(cafes);
+        console.table(cafes);
 
         displayCafeList(cafes);
 
