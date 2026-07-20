@@ -49,3 +49,36 @@ function displayCafeList(cafes){
     });
 
 }
+
+
+function showDetails(cafe){
+
+    document.getElementById("detailsPanel")
+        .classList.add("show");
+
+    document.getElementById("detailName")
+        .innerText=
+            cafe.tags?.name ||
+            "Unnamed Cafe";
+
+    document.getElementById("detailDistance")
+        .innerText=
+            Math.round(cafe.distance)+" meters away";
+
+    document.getElementById("detailAddress")
+        .innerText=
+            cafe.tags?.["addr:full"] ||
+
+            cafe.tags?.["addr:street"] ||
+
+            "No address";
+    document
+        .getElementById("closePanel")
+        .onclick=()=>{
+        
+        document
+        .getElementById("detailsPanel")
+        .classList.remove("show");
+        };
+
+}
