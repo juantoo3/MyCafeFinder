@@ -1,84 +1,132 @@
-function displayCafeList(cafes){
+function displayCafeList(cafes) {
 
-    const list=document.getElementById("cafeList");
+    const list = document.getElementById("cafeList");
 
-    list.innerHTML="";
+    list.innerHTML = "";
 
-    cafes.forEach((cafe,index)=>{
+    if (cafes.length === 0) {
 
-        const div=document.createElement("div");
-
-        div.className="cafe-card";
-
-        div.innerHTML=`
-
-        <h3>${cafe.tags?.name || "Unnamed Cafe"}</h3>
-
-        <div class="distance">
-
-        ${(cafe.distance/1000<1)?
-
-            Math.round(cafe.distance)+" m"
-
-            :
-
-            (cafe.distance/1000).toFixed(1)+" km"
-
-        }
-
-        away
-
-        </div>
-
-        <p>
-
-        ${cafe.tags?.["addr:street"] || ""}
-
-        </p>
-
+        list.innerHTML = `
+            <p>No nearby cafes found.</p>
         `;
 
-        div.onclick=()=>{
+        return;
+    }
+
+    cafes.forEach((cafe, index) => {
+
+        const card = document.createElement("div");
+
+        card.className = "cafe-card";
+
+        card.innerHTML = `
+            <h3>${cafe.tags?.name || "Unnamed Cafe"}</h3>
+
+            <div class="distance">
+                ${formatDistance(cafe.distance)} away
+            </div>
+
+            <p>
+                ${getAddress(cafe)}
+            </p>
+        `;
+
+        card.addEventListener("click", () => {
+
+            // Highlight selected card
+            document.querySelectorAll(".cafe-card")
+                .forEach(c => c.classList.remove("active"));
+
+            card.classList.add("active");
 
             focusCafe(index);
 
-        };
+        });
 
-        list.appendChild(div);
+        list.appendChild(card);
 
     });
 
 }
 
+// ==========================================
 
-function showDetails(cafe){
+function showDetails(cafe) {
 
-    document.getElementById("detailsPanel")
-        .classList.add("show");
+    const panel = document.getElementById("detailsPanel");
 
-    document.getElementById("detailName")
-        .innerText=
-            cafe.tags?.name ||
-            "Unnamed Cafe";
+    panel.classList.add("show");
 
-    document.getElementById("detailDistance")
-        .innerText=
-            Math.round(cafe.distance)+" meters away";
+    document.getElementById("detailName").textContent =
+        cafe.tags?.name || "Unnamed Cafe";
 
-    document.getElementById("detailAddress")
-        .innerText=
-            cafe.tags?.["addr:full"] ||
+    document.getElementById("detailDistance").textContent =
+        formatDistance(cafe.distance) + " away";
 
-            cafe.tags?.["addr:street"] ||
+    document.getElementById("detailAddress").textContent =
+        getAddress(cafe);
 
-            "No address";
-    document
-        .getElementById("closePanel")
-        .onclick=()=>{
-        
-        document
-        .getElementById("detailsPanel")
-        .classList.remove("show");
-        };
+    document.getElementById("navigateBtn").onclick = () => {
+
+        window.open(
+            `https://www.google.com/maps/dir/?api=1&destination=${cafe.lat},${cafe.lon}`,
+            "_blank"
+        );
+
+    };
 
 }
+
+// ==========================================
+
+function hideDetails() {
+
+    document
+        .getElementById("detailsPanel")
+        .classList.remove("show");
+
+}
+
+// ==========================================
+
+function formatDistance(distance) {
+
+    if (distance < 1000) {
+
+        return `${Math.round(distance)} m`;
+
+    }
+
+    return `${(distance / 1000).toFixed(1)} km`;
+
+}
+
+// ==========================================
+
+function getAddress(cafe) {
+
+    if (cafe.tags?.["addr:full"])
+        return cafe.tags["addr:full"];
+
+    if (cafe.tags?.["addr:street"])
+        return cafe.tags["addr:street"];
+
+    if (cafe.tags?.["addr:housenumber"])
+        return cafe.tags["addr:housenumber"];
+
+    if (cafe.tags?.["addr:city"])
+        return cafe.tags["addr:city"];
+
+    return "Address unavailable";
+
+}
+
+// INITIALIZE EVENTS
+
+document.addEventListener("DOMContentLoaded", () => {
+
+    document
+        .getElementById("closePanel")
+        .addEventListener("click", hideDetails);
+
+});
