@@ -13,13 +13,22 @@ function initializeApp() {
 
             createMap(location);
 
-            searchNearbyCafes(location);
-
             setupLocationButton(location);
+
+            // Show loading while fetching cafes
+            document.getElementById("cafeList").innerHTML = `
+                <div class="loading">
+                    Finding nearby cafes...
+                </div>
+            `;
+
+            searchNearbyCafes(location);
 
         },
 
-        () => {
+        error => {
+
+            console.error(error);
 
             alert("Unable to retrieve location.");
 
