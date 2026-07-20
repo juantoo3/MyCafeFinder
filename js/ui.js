@@ -1,27 +1,50 @@
-function displayCafeList(cafes) {
+function displayCafeList(cafes){
 
-    const list =
-        document.getElementById("cafeList");
+    const list=document.getElementById("cafeList");
 
-    list.innerHTML = "";
+    list.innerHTML="";
 
-    cafes.forEach(cafe => {
+    cafes.forEach((cafe,index)=>{
 
-        const name =
-            cafe.tags?.name || "Unnamed Cafe";
+        const div=document.createElement("div");
 
-        const address =
-            cafe.tags?.addr_street || "";
+        div.className="cafe-card";
 
-        list.innerHTML += `
-            <div class="cafe-card">
+        div.innerHTML=`
 
-                <h4>${name}</h4>
+        <h3>${cafe.tags?.name || "Unnamed Cafe"}</h3>
 
-                <p>${address}</p>
+        <div class="distance">
 
-            </div>
+        ${(cafe.distance/1000<1)?
+
+            Math.round(cafe.distance)+" m"
+
+            :
+
+            (cafe.distance/1000).toFixed(1)+" km"
+
+        }
+
+        away
+
+        </div>
+
+        <p>
+
+        ${cafe.tags?.["addr:street"] || ""}
+
+        </p>
+
         `;
+
+        div.onclick=()=>{
+
+            focusCafe(index);
+
+        };
+
+        list.appendChild(div);
 
     });
 
