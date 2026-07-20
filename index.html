@@ -4,60 +4,61 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>CafeFinder</title>
 
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/style.css">
+
+    <link rel="stylesheet"
+        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap"
+        rel="stylesheet">
 </head>
 
 <body>
 
-    <header>
+<header>
 
-        <h2>☕ CafeFinder</h2>
+    <h2>☕ CafeFinder</h2>
 
-        <input
-            type="text"
-            placeholder="Search Cafes..."
-            id="searchBar">
+    <input
+        id="searchBar"
+        type="text"
+        placeholder="Search Cafes...">
 
-    </header>
+</header>
 
-    <main>
+<main>
 
-        <aside id="sidebar">
+    <aside id="sidebar">
 
-            <h3>Nearby Cafes</h3>
+        <h3>Nearby Cafes</h3>
 
-            <div id="cafeList">
+        <div id="cafeList">
 
-                <p>Searching nearby cafes...</p>
+            <p>Finding nearby cafes...</p>
 
-            </div>
+        </div>
 
-        </aside>
+    </aside>
 
-        <section id="map"></section>
+    <section id="map"></section>
 
-    </main>
+</main>
 
-    <button id="myLocationBtn">
-        📍 My Location
-    </button>
+<button id="myLocationBtn">
 
-    <script src="map.js"></script>
-    <script src="places.js"></script>
-    <script src="ui.js"></script>
-    <script src="app.js"></script>
+📍 My Location
 
-    <script async
-        src="https://maps.googleapis.com/maps/api/js?key=API_KEY&libraries=places&callback=initializeApp">
-    </script>
+</button>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<script src="map.js"></script>
+<script src="places.js"></script>
+<script src="ui.js"></script>
+<script src="app.js"></script>
 
 </body>
-
 </html>
