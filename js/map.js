@@ -29,37 +29,46 @@ function createMap(location) {
 
 function addCafeMarkers(cafes) {
 
+    // Remove existing markers
     cafeMarkers.forEach(marker => {
-
         map.removeLayer(marker);
-
     });
 
     cafeMarkers = [];
 
+    // Coffee icon
+    const coffeeIcon = L.icon({
+        iconUrl: "assets/coffee.png",
+        iconSize: [36, 36],
+        iconAnchor: [18, 36],
+        popupAnchor: [0, -36]
+    });
+
     cafes.forEach(cafe => {
 
-        let lat;
-        let lon;
+        const lat = cafe.lat;
+        const lon = cafe.lon;
 
-        if (cafe.lat) {
+        const marker = L.marker(
+            [lat, lon],
+            {
+                icon: coffeeIcon
+            }
+        )
+        .addTo(map)
+        .bindPopup(`
+            <strong>${cafe.tags?.name || "Unnamed Cafe"}</strong>
+            <br>
+            📍 ${formatDistance(cafe.distance)} away
+        `);
 
-            lat = cafe.lat;
-            lon = cafe.lon;
+        // Save cafe object for later use
+        marker.cafe = cafe;
 
-        } else {
-
-            lat = cafe.center.lat;
-            lon = cafe.center.lon;
-
-        }
-
-        const marker = L.marker([lat, lon])
-            .addTo(map)
-            .bindPopup(
-                cafe.tags?.name ||
-                "Unnamed Cafe"
-            );
+        // Clicking the marker opens details panel
+        marker.on("click", () => {
+            showDetails(cafe);
+        });
 
         cafeMarkers.push(marker);
 
@@ -67,11 +76,16 @@ function addCafeMarkers(cafes) {
 
 }
 
-function focusCafe(index){
+function focusCafe(index) {
 
-    const marker=cafeMarkers[index];
+    const marker = cafeMarkers[index];
 
-    map.flyTo(marker.getLatLng(),17);
+    if (!marker) return;
+
+    map.flyTo(marker.getLatLng(), 17, {
+        animate: true,
+        duration: 1
+    });
 
     marker.openPopup();
 
