@@ -1,29 +1,67 @@
 let map;
 let userMarker;
+let cafeMarkers = [];
 
-function createMap(location){
+function createMap(location) {
 
-    map = new google.maps.Map(document.getElementById("map"),{
+    map = L.map("map").setView(
+        [location.lat, location.lng],
+        16
+    );
 
-        center:location,
+    L.tileLayer(
+        "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+        {
+            maxZoom: 19,
+            attribution:
+                "&copy; OpenStreetMap contributors"
+        }
+    ).addTo(map);
 
-        zoom:15,
+    userMarker = L.marker([
+        location.lat,
+        location.lng
+    ])
+    .addTo(map)
+    .bindPopup("📍 You are here")
+    .openPopup();
+}
 
-        mapTypeControl:false,
+function addCafeMarkers(cafes) {
 
-        streetViewControl:false,
+    cafeMarkers.forEach(marker => {
 
-        fullscreenControl:false
+        map.removeLayer(marker);
 
     });
 
-    userMarker = new google.maps.Marker({
+    cafeMarkers = [];
 
-        position:location,
+    cafes.forEach(cafe => {
 
-        map,
+        let lat;
+        let lon;
 
-        title:"You are here"
+        if (cafe.lat) {
+
+            lat = cafe.lat;
+            lon = cafe.lon;
+
+        } else {
+
+            lat = cafe.center.lat;
+            lon = cafe.center.lon;
+
+        }
+
+        const marker = L.marker([lat, lon])
+            .addTo(map)
+            .bindPopup(
+                cafe.tags?.name ||
+                "Unnamed Cafe"
+            );
+
+        cafeMarkers.push(marker);
 
     });
 
