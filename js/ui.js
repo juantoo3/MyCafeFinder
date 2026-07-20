@@ -1,23 +1,26 @@
-function displayCafeList(cafes){
+function displayCafeList(cafes) {
 
-    const container=document.getElementById("cafeList");
+    const list =
+        document.getElementById("cafeList");
 
-    container.innerHTML="";
+    list.innerHTML = "";
 
-    cafes.forEach(cafe=>{
+    cafes.forEach(cafe => {
 
-        container.innerHTML+=`
+        const name =
+            cafe.tags?.name || "Unnamed Cafe";
 
-        <div class="cafe-card">
+        const address =
+            cafe.tags?.addr_street || "";
 
-            <h4>${cafe.name}</h4>
+        list.innerHTML += `
+            <div class="cafe-card">
 
-            <p>⭐ ${cafe.rating || "No Rating"}</p>
+                <h4>${name}</h4>
 
-            <p>${cafe.vicinity}</p>
+                <p>${address}</p>
 
-        </div>
-
+            </div>
         `;
 
     });
