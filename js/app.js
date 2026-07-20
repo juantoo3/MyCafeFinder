@@ -18,6 +18,7 @@ function initializeApp() {
             // Show loading while fetching cafes
             document.getElementById("cafeList").innerHTML = `
                 <div class="loading">
+                    ☕<br><br>
                     Finding nearby cafes...
                 </div>
             `;
