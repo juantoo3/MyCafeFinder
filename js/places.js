@@ -28,19 +28,43 @@ out center;
 
         const data = await response.json();
 
-        console.log(data);
+        // Process cafes
+        const cafes = data.elements.map(cafe => {
 
-        displayCafeList(data.elements);
+            const lat = cafe.lat ?? cafe.center.lat;
+            const lon = cafe.lon ?? cafe.center.lon;
 
-        addCafeMarkers(data.elements);
+            return {
+                ...cafe,
+                lat,
+                lon,
+                distance: calculateDistance(
+                    location.lat,
+                    location.lng,
+                    lat,
+                    lon
+                )
+            };
+
+        });
+
+        // Sort by nearest
+        cafes.sort((a, b) => a.distance - b.distance);
+
+        console.log(cafes);
+
+        displayCafeList(cafes);
+
+        addCafeMarkers(cafes);
 
     }
-    catch(error){
+    catch (error) {
 
         console.error(error);
 
-        document.getElementById("cafeList").innerHTML =
-            `<p>Unable to load nearby cafes.</p>`;
+        document.getElementById("cafeList").innerHTML = `
+            <p>Unable to load nearby cafes.</p>
+        `;
 
     }
 
